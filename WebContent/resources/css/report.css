@@ -1,0 +1,161 @@
+@media print {
+	table {page-break-inside:avoid;}
+	.break {page-break-after: always;}
+}
+
+#report_header {
+	display: block; 
+	text-align: center;
+	position: running(report_header);
+	color: black;
+}
+
+#report_footer {
+	border-top: 1px solid black;
+	display: block; 
+	text-align: center;
+	position: running(report_footer);
+	color: black;
+}
+
+@page {	
+	size: A4 portrait;
+	margin: 4cm 1.2cm 2.2cm 1.2cm;
+	@bottom-center { content: element(report_footer) }; 
+	@top-center { content: element(report_header)}; 
+}
+
+#pagenumber:before {
+	font-size: 11px;
+	content: counter(page);
+}
+
+#pagecount:before {
+	font-size: 11px;
+	content: counter(pages);
+}	
+
+.h1 {
+  font-size: 36px;
+  color: black;
+}
+.h2 {
+  font-size: 30px;
+  color: black;
+}
+.h3 {
+  font-size: 24px;
+  color: black;
+}
+.h4 {
+  font-size: 18px;
+  color: black;
+}	
+.h4-2 {
+  font-size: 15px;
+  color: black;
+}	
+.h5 {
+  font-size: 12px;
+  color: black;
+}	
+
+.centered {
+	text-align: center;
+}	
+
+body, table {
+    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    color: #324765;
+    background-color: #ffffff;
+}
+
+.table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.table.table-bordered {
+	border: 1px solid black;
+}
+
+.table.table-bordered tr td,
+.table.table-bordered tr th  {
+	border: 1px solid black;
+	padding: 3px;
+}
+
+.table.table-bordered tr th {
+	color: black;
+}
+
+.course-table {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.course-table td {
+	vertical-align: top;
+	padding: 3px;
+	font-weight: bold;
+}
+
+.course-table .topic-cell,
+.course-table .outcome-cell {
+	width: 35%;
+}
+
+.objective-table {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.objective-table td {
+	vertical-align: top;
+	padding: 3px;
+	font-weight: bold;
+}
+
+.objective-table .name-cell {
+	width: 22%;
+}
+
+.objective-table .percentage-cell {
+	width: 10%;
+}
+
+.pdf-block {
+	display: block;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+div.separator {
+	border-bottom: 1px solid black; 
+	width: 200px; 
+	margin: 0 auto;
+}
+
+.section-title {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	display: inline-block;
+	border-bottom: 1px solid black;	
+}
+
+.sub-section-title {
+	margin-top: 8px;
+	margin-bottom: 8px;
+	display: inline-block;
+}
+
+.margin-left {
+	margin-left: 5px;
+}
+
+.pre-wrap {
+	white-space: pre-wrap;
+}
