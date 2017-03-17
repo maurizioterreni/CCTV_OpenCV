@@ -5,9 +5,9 @@
         http://www.jboss.org/ironjacamar/schema
         http://docs.jboss.org/ironjacamar/schema/datasources_1_0.xsd">
         
-	<datasource jndi-name="majoraDatasource"
+	<datasource jndi-name="cctvDS"
 		enabled="true" use-java-context="true" pool-name="MySQLDS">
-		<connection-url>jdbc:mysql://localhost:3306/cctv</connection-url>
+		<connection-url>jdbc:mysql://database:3306/cctv</connection-url>
 		<driver>mysql</driver>
 		<security>
 			<user-name>root</user-name>
