@@ -15,13 +15,16 @@
 
 
 
+
 	<dependencies>
 
 
 		<!-- https://mvnrepository.com/artifact/org.bytedeco.javacpp-presets/opencv -->
 
+		<!-- https://mvnrepository.com/artifact/com.mytechia/opencv -->
+		<!-- https://mvnrepository.com/artifact/nu.pattern/opencv -->
 
-		
+
 		<!-- JavaEE specification -->
 
 		<dependency>
@@ -119,14 +122,19 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+		
+		
+		<dependency>
+			<groupId>org.openpnp</groupId>
+			<artifactId>opencv</artifactId>
+			<version>3.2.0-1</version>
+		</dependency>
 
 	</dependencies>
 
 
 	<build>
 		<plugins>
-			<!-- Maven compiler plugin -->
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -134,10 +142,8 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
-				
-			</plugin>
 
-			<!-- Maven war plugin -->
+			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -147,7 +153,8 @@
 					<warSourceDirectory>${basedir}/WebContent</warSourceDirectory>
 				</configuration>
 			</plugin>
-		</plugins>
 
+		</plugins>
 	</build>
+
 </project>

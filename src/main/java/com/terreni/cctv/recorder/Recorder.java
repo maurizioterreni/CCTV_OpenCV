@@ -17,7 +17,9 @@ import com.terreni.cctv.recorder.Detector.MotionDetection;
 
 
 public class Recorder implements Runnable{
-	
+	static{
+		nu.pattern.OpenCV.loadLocally();
+	}
 	private RecorderUtils utils;
 
 	public Recorder(RecorderUtils utils) {
@@ -41,7 +43,7 @@ public class Recorder implements Runnable{
 
 
 	public void doVideo(Long timeRecording , String name) throws InterruptedException{
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		VideoCapture camera = new VideoCapture(0);
 		
 		VideoWriter writer = new VideoWriter(utils.getPath() + "/" + name + "." + utils.getFormat(), VideoWriter.fourcc('D', 'I', 'V', 'X'), utils.getFps(), utils.getSize(), true);
