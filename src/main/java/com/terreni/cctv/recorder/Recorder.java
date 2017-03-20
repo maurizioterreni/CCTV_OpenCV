@@ -1,5 +1,6 @@
 package com.terreni.cctv.recorder;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,30 +28,32 @@ public class Recorder implements Runnable{
 	}
 
 	public void run() {
-		while(true){
-			Long timeRecording = System.currentTimeMillis() + (1000 * 30);
-			
-			System.out.println((timeRecording - System.currentTimeMillis()));
-			
-			try {
-				doVideo(timeRecording, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				
+		if(checkPath()){
+			while(true){
+				Long timeRecording = System.currentTimeMillis() + (1000 * 30);
+
+				System.out.println((timeRecording - System.currentTimeMillis()));
+
+				try {
+					doVideo(timeRecording, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+
+				}
 			}
 		}
 	}
 
 
 	public void doVideo(Long timeRecording , String name) throws InterruptedException{
-//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		VideoCapture camera = new VideoCapture(0);
-		
+
 		VideoWriter writer = new VideoWriter(utils.getPath() + "/" + name + "." + utils.getFormat(), VideoWriter.fourcc('D', 'I', 'V', 'X'), utils.getFps(), utils.getSize(), true);
-			
+
 		Long timeLaps = (Long) (1000 / utils.getFps().longValue());
-		
-		
+
+
 		camera.set(Videoio.CV_CAP_PROP_FRAME_WIDTH, utils.getWidth());
 		camera.set(Videoio.CV_CAP_PROP_FRAME_HEIGHT, utils.getHeight());
 		Mat frame = new Mat();
@@ -68,12 +71,28 @@ public class Recorder implements Runnable{
 				}else{
 					prevFrame = frame.clone();
 				}
-				
+
 				frame.release();
 			}
-				
+
 		}	
 		writer.release();
+	}
+
+	private boolean checkPath(){
+		File theDir = new File(utils.getPath());
+		if (!theDir.exists()) {
+			System.out.println("creating directory: " + theDir.getName());
+			try{
+				theDir.mkdir();
+				System.out.println("DIR created"); 
+				return true;
+			} 
+			catch(SecurityException se){
+				return false;
+			}        
+		}
+		return true;
 	}
 
 }
