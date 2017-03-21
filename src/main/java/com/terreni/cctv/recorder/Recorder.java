@@ -14,7 +14,9 @@ import org.opencv.videoio.VideoWriter;
 import org.opencv.videoio.Videoio;
 
 import com.terreni.cctv.dao.LogDao;
+import com.terreni.cctv.dao.RecorderModelDao;
 import com.terreni.cctv.model.Log;
+import com.terreni.cctv.model.RecorderModel;
 import com.terreni.cctv.model.RecorderUtils;
 import com.terreni.cctv.model.factory.ModelFactory;
 import com.terreni.cctv.model.utils.LogError;
@@ -26,17 +28,19 @@ public class Recorder implements Runnable{
 	private RecorderUtils utils;
 	
 	LogDao logDao;
+	RecorderModelDao recorderModelDao;
 
-	public Recorder(RecorderUtils utils , LogDao logDao) {
+	public Recorder(RecorderUtils utils , LogDao logDao , RecorderModelDao recorderModelDao) {
 		this.utils = utils;
 		this.logDao = logDao;
+		this.recorderModelDao = recorderModelDao;
 	}
 
 	public void run() {
 		if(checkPath()){
 			while(true){
 				while(utils.getDoRecorder()){
-					Long timeRecording = System.currentTimeMillis() + (1000 * 30);
+					Long timeRecording = System.currentTimeMillis() + (1000 * utils.getTimeRecording());
 					try {
 						createLog(LogError.RECORDER_STARTING);
 						doVideo(timeRecording, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
@@ -51,18 +55,16 @@ public class Recorder implements Runnable{
 
 
 	public void doVideo(Long timeRecording , String name) throws InterruptedException{
-		VideoCapture camera = new VideoCapture(0);
-
+		VideoCapture camera = new VideoCapture(utils.getCameraId());
 		VideoWriter writer = new VideoWriter(utils.getPath() + "/" + name + "." + utils.getFormat(), VideoWriter.fourcc('D', 'I', 'V', 'X'), utils.getFps(), utils.getSize(), true);
-
 		Long timeLaps = (Long) (1000 / utils.getFps().longValue());
-
-
 		camera.set(Videoio.CV_CAP_PROP_FRAME_WIDTH, utils.getWidth());
 		camera.set(Videoio.CV_CAP_PROP_FRAME_HEIGHT, utils.getHeight());
 		Mat frame = new Mat();
 		Mat prevFrame = new Mat();
 		MotionDetection motionDetection = new MotionDetection(new Size(new Double(utils.getWidth()), new Double(utils.getHeight())) , 16);
+		RecorderModel recorderModel = ModelFactory.recorderModel();
+		recorderModel.newRecorder(utils.getPath() + "/" + name + "." + utils.getFormat());
 		while(System.currentTimeMillis() < timeRecording){
 
 			if (camera.read(frame)){

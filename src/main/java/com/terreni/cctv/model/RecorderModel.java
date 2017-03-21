@@ -38,4 +38,9 @@ public class RecorderModel extends BaseEntity{
 	public void setPath(String path) {
 		this.path = path;
 	}
+	
+	public void newRecorder(String path){
+		this.path = path;
+		this.time = System.currentTimeMillis();
+	}
 }

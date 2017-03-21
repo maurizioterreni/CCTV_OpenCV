@@ -16,6 +16,8 @@ public class RecorderUtils extends BaseEntity{
 	private Integer fps;
 	private Integer width;
 	private Integer height;
+	private Integer cameraId;
+	private Long timeRecording;
 	private Boolean doRecorder;
 	
 	
@@ -81,6 +83,22 @@ public class RecorderUtils extends BaseEntity{
 
 	public void setDoRecorder(Boolean doRecorder) {
 		this.doRecorder = doRecorder;
+	}
+
+	public Integer getCameraId() {
+		return cameraId;
+	}
+
+	public void setCameraId(Integer cameraId) {
+		this.cameraId = cameraId;
+	}
+
+	public Long getTimeRecording() {
+		return timeRecording;
+	}
+
+	public void setTimeRecording(Long timeRecording) {
+		this.timeRecording = timeRecording;
 	}
 	
 	
