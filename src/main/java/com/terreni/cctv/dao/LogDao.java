@@ -1,5 +1,7 @@
 package com.terreni.cctv.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,6 +32,13 @@ public class LogDao {
 		Log log = findById(logId);
 		entityManager.remove(log);
 		entityManager.flush();
+	}
+	
+	public List<Log> getAllLog(){
+		return entityManager
+				.createQuery("from Log l "
+						+ "order by l.time desc ", Log.class)
+				.getResultList();
 	}
 	
 }

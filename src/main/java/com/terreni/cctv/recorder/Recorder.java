@@ -4,6 +4,8 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.inject.Inject;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
@@ -24,23 +26,27 @@ import com.terreni.cctv.recorder.Detector.MotionDetection;
 public class Recorder implements Runnable{
 	static{	nu.pattern.OpenCV.loadLocally(); }
 	private RecorderUtils utils;
+	
+	
+	@Inject
+	LogBean logBean = new LogBean();
 
 	public Recorder(RecorderUtils utils) {
 		this.utils = utils;
 	}
 
 	public void run() {
-		
 		if(checkPath()){
 			while(true){
-				Long timeRecording = System.currentTimeMillis() + (1000 * 30);
-				try {
-					createLog(LogError.RECORDER_STARTING);
-					doVideo(timeRecording, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
-				} catch (InterruptedException e) {
-					createLog(LogError.CAN_NOT_RECORDER);
-					e.printStackTrace();
-
+				while(utils.getDoRecorder()){
+					Long timeRecording = System.currentTimeMillis() + (1000 * 30);
+					try {
+						createLog(LogError.RECORDER_STARTING);
+						doVideo(timeRecording, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
+					} catch (InterruptedException e) {
+						createLog(LogError.CAN_NOT_RECORDER);
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -100,6 +106,6 @@ public class Recorder implements Runnable{
 	private void createLog(String msg){
 		Log log = ModelFactory.log();
 		log.create(msg);
-		LogBean.saveLog(log);
+		logBean.saveLog(log);
 	}
 }

@@ -16,6 +16,7 @@ public class RecorderUtils extends BaseEntity{
 	private Integer fps;
 	private Integer width;
 	private Integer height;
+	private Boolean doRecorder;
 	
 	
 	RecorderUtils(){
@@ -72,6 +73,14 @@ public class RecorderUtils extends BaseEntity{
 	
 	public Point getLabelPoint(){
 		return new Point(width - 200,height - 20);
+	}
+
+	public Boolean getDoRecorder() {
+		return doRecorder;
+	}
+
+	public void setDoRecorder(Boolean doRecorder) {
+		this.doRecorder = doRecorder;
 	}
 	
 	
