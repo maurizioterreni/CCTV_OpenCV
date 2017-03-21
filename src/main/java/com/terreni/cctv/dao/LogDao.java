@@ -31,4 +31,5 @@ public class LogDao {
 		entityManager.remove(log);
 		entityManager.flush();
 	}
+	
 }

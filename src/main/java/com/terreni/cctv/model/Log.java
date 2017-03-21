@@ -33,5 +33,10 @@ public class Log extends BaseEntity{
 		this.time = time;
 	}
 	
+	public void create(String msg){
+		this.mex = msg;
+		this.time = System.currentTimeMillis();
+	}
+	
 	
 }

@@ -13,14 +13,16 @@ import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.VideoWriter;
 import org.opencv.videoio.Videoio;
 
+import com.terreni.cctv.bean.LogBean;
+import com.terreni.cctv.model.Log;
 import com.terreni.cctv.model.RecorderUtils;
+import com.terreni.cctv.model.factory.ModelFactory;
+import com.terreni.cctv.model.utils.LogError;
 import com.terreni.cctv.recorder.Detector.MotionDetection;
 
 
 public class Recorder implements Runnable{
-	static{
-		nu.pattern.OpenCV.loadLocally();
-	}
+	static{	nu.pattern.OpenCV.loadLocally(); }
 	private RecorderUtils utils;
 
 	public Recorder(RecorderUtils utils) {
@@ -28,15 +30,15 @@ public class Recorder implements Runnable{
 	}
 
 	public void run() {
+		
 		if(checkPath()){
 			while(true){
 				Long timeRecording = System.currentTimeMillis() + (1000 * 30);
-
-				System.out.println((timeRecording - System.currentTimeMillis()));
-
 				try {
+					createLog(LogError.RECORDER_STARTING);
 					doVideo(timeRecording, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss")));
 				} catch (InterruptedException e) {
+					createLog(LogError.CAN_NOT_RECORDER);
 					e.printStackTrace();
 
 				}
@@ -46,7 +48,6 @@ public class Recorder implements Runnable{
 
 
 	public void doVideo(Long timeRecording , String name) throws InterruptedException{
-		//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		VideoCapture camera = new VideoCapture(0);
 
 		VideoWriter writer = new VideoWriter(utils.getPath() + "/" + name + "." + utils.getFormat(), VideoWriter.fourcc('D', 'I', 'V', 'X'), utils.getFps(), utils.getSize(), true);
@@ -82,17 +83,23 @@ public class Recorder implements Runnable{
 	private boolean checkPath(){
 		File theDir = new File(utils.getPath());
 		if (!theDir.exists()) {
-			System.out.println("creating directory: " + theDir.getName());
+			createLog(LogError.PATH_CREATED);
 			try{
 				theDir.mkdir();
-				System.out.println("DIR created"); 
+				createLog(LogError.PATH_CREATED);
 				return true;
 			} 
 			catch(SecurityException se){
+				createLog(LogError.PATH_NOT_CREATED);
 				return false;
 			}        
 		}
 		return true;
 	}
 
+	private void createLog(String msg){
+		Log log = ModelFactory.log();
+		log.create(msg);
+		LogBean.saveLog(log);
+	}
 }
