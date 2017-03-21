@@ -4,8 +4,6 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import javax.inject.Inject;
-
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
@@ -15,7 +13,7 @@ import org.opencv.videoio.VideoCapture;
 import org.opencv.videoio.VideoWriter;
 import org.opencv.videoio.Videoio;
 
-import com.terreni.cctv.bean.LogBean;
+import com.terreni.cctv.dao.LogDao;
 import com.terreni.cctv.model.Log;
 import com.terreni.cctv.model.RecorderUtils;
 import com.terreni.cctv.model.factory.ModelFactory;
@@ -27,12 +25,11 @@ public class Recorder implements Runnable{
 	static{	nu.pattern.OpenCV.loadLocally(); }
 	private RecorderUtils utils;
 	
-	
-	@Inject
-	LogBean logBean = new LogBean();
+	LogDao logDao;
 
-	public Recorder(RecorderUtils utils) {
+	public Recorder(RecorderUtils utils , LogDao logDao) {
 		this.utils = utils;
+		this.logDao = logDao;
 	}
 
 	public void run() {
@@ -89,7 +86,7 @@ public class Recorder implements Runnable{
 	private boolean checkPath(){
 		File theDir = new File(utils.getPath());
 		if (!theDir.exists()) {
-			createLog(LogError.PATH_CREATED);
+			createLog(LogError.PATH_CREATE);
 			try{
 				theDir.mkdir();
 				createLog(LogError.PATH_CREATED);
@@ -106,6 +103,6 @@ public class Recorder implements Runnable{
 	private void createLog(String msg){
 		Log log = ModelFactory.log();
 		log.create(msg);
-		logBean.saveLog(log);
+		logDao.save(log);
 	}
 }

@@ -11,8 +11,8 @@ public class RecorderSetup implements Runnable{
 	
 	@Override
 	public void run() {
-		Thread thread = new Thread(new  Recorder(recorderUtils));
-		thread.start();
+		//Thread thread = new Thread(new  Recorder(recorderUtils));
+		//thread.start();
 		
 		//TODO gestire crash di registrazione
 	}
