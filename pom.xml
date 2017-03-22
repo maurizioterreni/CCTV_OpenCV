@@ -27,6 +27,17 @@
 		<!-- JavaEE specification -->
 
 		<!-- JavaEE specification -->
+		<dependency>
+			<groupId>org.wildfly.core</groupId>
+			<artifactId>wildfly-server</artifactId>
+			<version>2.0.10.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/jboss/jboss-system -->
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss-system</artifactId>
+			<version>4.0.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
@@ -47,6 +58,24 @@
 					<artifactId>xalan</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.2.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>2.2.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>5.0</version>
 		</dependency>
 
 		<!-- Hibernate dependencies -->

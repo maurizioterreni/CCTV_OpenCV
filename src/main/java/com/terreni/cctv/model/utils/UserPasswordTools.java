@@ -8,7 +8,7 @@ public final class UserPasswordTools {
 
 	private static final String ALGORITHM = "SHA-256";
 	
-	private UserPasswordTools() {}
+	public UserPasswordTools() {}
 	
 	public static String encrypt(String password) {
 		return createPasswordKey( password );
@@ -22,6 +22,22 @@ public final class UserPasswordTools {
 		try {
 			MessageDigest md = MessageDigest.getInstance(ALGORITHM);
 			md.update( password.getBytes() );
+			
+			return Base64.getEncoder().encodeToString(md.digest());
+			
+		} catch (NoSuchAlgorithmException e) {
+			throw new IllegalStateException( "algorithm not found", e );
+		}
+	}
+
+	public String generateEncryptedPassword(String currentPassword) {
+		if ( currentPassword == null ) {
+			throw new IllegalArgumentException( "password cannot be null" );
+		}
+		
+		try {
+			MessageDigest md = MessageDigest.getInstance(ALGORITHM);
+			md.update( currentPassword.getBytes() );
 			
 			return Base64.getEncoder().encodeToString(md.digest());
 			

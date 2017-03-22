@@ -15,6 +15,7 @@ public class StartUpServlet  implements ServletContextListener {
 	LogDao logDao;
 	@EJB
 	RecorderModelDao recorderModelDao;
+
 	
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
@@ -30,7 +31,7 @@ public class StartUpServlet  implements ServletContextListener {
 		
 		Thread thread = new Thread(new  Recorder(utils , logDao , recorderModelDao)); 
 		
-		thread.start();
+//		thread.start();
 	}
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {

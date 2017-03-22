@@ -1,5 +1,7 @@
 package com.terreni.cctv.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,5 +32,25 @@ public class UserDao {
 		User user = findById(userId);
 		entityManager.remove(user);
 		entityManager.flush();
+	}
+	
+	public User findByName(String username) {
+		List<User> rez = entityManager
+			.createQuery("from User u "
+					+ "where u.username = :username", User.class)
+			.setParameter("username", username)
+			.getResultList();
+		
+		if(rez.size() > 0) {
+			return rez.get(0);
+		}
+		
+		return null;
+	}
+	public void updatePassword(Long userId, String password) {
+		User user = findById(userId);
+		user.setPassword(password);
+		entityManager.flush();
+		
 	}
 }

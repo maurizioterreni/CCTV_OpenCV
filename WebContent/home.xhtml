@@ -7,16 +7,39 @@
 <ui:composition template="/layout/template.xhtml">
 	<ui:define name="body">
 
-		<div id="home-title" class="jumbotron">
+		<!--  <div id="home-title" class="jumbotron">
 			<div class="container">
 				<h4>welcome to</h4>
 				<h1>CCTV</h1>
 			</div>
-		</div>
-		
-		<div class="container">
-			
+		</div>-->
 
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6 col-md-3">
+					<a href="#" class="thumbnail"> <img src="http://www.greenplanetfireandsecurity.co.uk/images/page-tops/cctv.jpg" style="height: 279px;" alt="test"/></a>
+					<h:outputLabel value="Diretta Video" />
+				</div>
+				
+				
+				<div class="col-xs-6 col-md-3">
+					<a href="#" class="thumbnail"> <img src="https://cdn3.iconfinder.com/data/icons/movie-video/512/Icon_23-512.png" style="height: 279px;" alt="test"/></a>
+					<h:outputLabel value="Registrazioni" />
+				</div>
+				
+				<div class="col-xs-6 col-md-3">
+					<a href="#" class="thumbnail"> <img src="http://icons.iconarchive.com/icons/icons8/windows-8/512/Security-Face-Recognition-Scan-icon.png" style="height: 279px;" alt="test"/></a>
+					<h:outputLabel value="Volti riconosciuti" />
+				</div>
+				
+				
+				<div class="col-xs-6 col-md-3">
+					<a href="#" class="thumbnail"> <img src="https://cdn3.iconfinder.com/data/icons/file-format-2/512/log_.log_file_file_format_document_extension_format-512.png" style="height: 279px;" alt="test"/></a>
+					<h:outputLabel value="Log sistema" />
+				</div>
+			</div>
+			
+			
 		</div>
 	</ui:define>
 </ui:composition>
