@@ -6,7 +6,11 @@ import javax.servlet.ServletContextListener;
 
 import com.terreni.cctv.dao.LogDao;
 import com.terreni.cctv.dao.RecorderModelDao;
+import com.terreni.cctv.dao.UserDao;
 import com.terreni.cctv.model.RecorderUtils;
+import com.terreni.cctv.model.User;
+import com.terreni.cctv.model.factory.ModelFactory;
+import com.terreni.cctv.model.utils.UserPasswordTools;
 import com.terreni.cctv.recorder.Recorder;
 
 public class StartUpServlet  implements ServletContextListener {
@@ -15,6 +19,9 @@ public class StartUpServlet  implements ServletContextListener {
 	LogDao logDao;
 	@EJB
 	RecorderModelDao recorderModelDao;
+	
+	@EJB
+	UserDao userDao;
 
 	
 	@Override
@@ -36,4 +43,14 @@ public class StartUpServlet  implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 	}
+	
+//	private void createUser(){
+//		User user = ModelFactory.user();
+//		
+//		user.setUsername("name");
+//		user.setPassword(UserPasswordTools.encrypt("password"));
+//		
+//		userDao.save(user);
+//		
+//	}
 }
