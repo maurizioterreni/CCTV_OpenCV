@@ -27,4 +27,5 @@ public class LogBean {
 	public List<Log> getAllLog(){
 		return logDao.getAllLog();
 	}
+	
 }

@@ -1,5 +1,7 @@
 package com.terreni.cctv.model;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -38,5 +40,9 @@ public class Log extends BaseEntity{
 		this.time = System.currentTimeMillis();
 	}
 	
+	public String timeToStr(){
+		Date date = new Date(time);
+		return new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(date);
+	}
 	
 }

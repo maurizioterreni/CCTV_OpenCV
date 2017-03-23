@@ -1,5 +1,7 @@
 package com.terreni.cctv.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,5 +32,12 @@ public class RecorderModelDao {
 		RecorderModel recorderModel = findById(recorderModelId);
 		entityManager.remove(recorderModel);
 		entityManager.flush();
+	}
+	
+	public List<RecorderModel> getAllRecorder(){
+		return entityManager
+				.createQuery("from recorder r "
+						+ "order by r.time desc ", RecorderModel.class)
+				.getResultList();
 	}
 }

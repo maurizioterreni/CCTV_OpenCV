@@ -17,20 +17,28 @@
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">CCTV - Home</a>
+					<h:link outcome="/home" styleClass="navbar-brand">CCTV - Home</h:link>
 				</div>
 
+				<div id="navbar" class="collapse navbar-collapse">
+					<h:panelGroup rendered="#{loginBean.loggedIn}">
+						<ul class="nav navbar-nav navbar-right">
+							<li><h:link outcome="/pages/setting/setting">
+									<h:outputText value="Impostazioni" />
+								</h:link></li>
+							<li><h:link outcome="/pages/user/change-password">
+									<h:outputText value="Change Password" />
+									<f:param name="uz" value="#{loginBean.user.id}" />
+								</h:link></li>
+								<li><h:link outcome="/pages/log/log">
+									<h:outputText value="Log sistema" />
+								</h:link></li>
+							<li class="pull-right"><h:commandLink value="Logout"
+									action="#{loginBean.logout()}" /></li>
+						</ul>
+					</h:panelGroup>
+				</div>
 
-				<h:panelGroup rendered="#{loginBean.loggedIn}">
-					<ul class="nav navbar-nav navbar-right">
-						<li><h:link outcome="/pages/user/change-password">
-								<h:outputText value="Change Password" />
-								<f:param name="uz" value="#{loginBean.user.id}" />
-							</h:link></li>
-						<li class="pull-right"><h:commandLink value="Logout"
-								action="#{loginBean.logout()}" /></li>
-					</ul>
-				</h:panelGroup>
 
 			</div>
 			<!-- /.container-fluid -->
