@@ -21,12 +21,13 @@ import com.terreni.cctv.model.RecorderUtils;
 import com.terreni.cctv.model.factory.ModelFactory;
 import com.terreni.cctv.model.utils.LogError;
 import com.terreni.cctv.recorder.Detector.MotionDetection;
+import com.terreni.cctv.servlet.utils.StreamImageSingleton;
 
 
 public class Recorder implements Runnable{
 	static{	nu.pattern.OpenCV.loadLocally(); }
 	private RecorderUtils utils;
-	
+
 	LogDao logDao;
 	RecorderModelDao recorderModelDao;
 
@@ -37,7 +38,7 @@ public class Recorder implements Runnable{
 	}
 
 	public void run() {
-		if(checkPath()){
+		if(checkPath("video")){
 			while(true){
 				while(utils.getDoRecorder()){
 					Long timeRecording = System.currentTimeMillis() + (1000 * utils.getTimeRecording());
@@ -56,7 +57,7 @@ public class Recorder implements Runnable{
 
 	public void doVideo(Long timeRecording , String name) throws InterruptedException{
 		VideoCapture camera = new VideoCapture(utils.getCameraId());
-		VideoWriter writer = new VideoWriter(utils.getPath() + "/" + name + "." + utils.getFormat(), VideoWriter.fourcc('D', 'I', 'V', 'X'), utils.getFps(), utils.getSize(), true);
+		VideoWriter writer = new VideoWriter(utils.getPath() + "/video/" + name + "." + utils.getFormat(), VideoWriter.fourcc('D', 'I', 'V', 'X'), utils.getFps(), utils.getSize(), true);
 		Long timeLaps = (Long) (1000 / utils.getFps().longValue());
 		camera.set(Videoio.CV_CAP_PROP_FRAME_WIDTH, utils.getWidth());
 		camera.set(Videoio.CV_CAP_PROP_FRAME_HEIGHT, utils.getHeight());
@@ -74,6 +75,7 @@ public class Recorder implements Runnable{
 				if(!prevFrame.empty()){
 					writer.write(motionDetection.detectMotion(prevFrame, frame.clone()));
 					prevFrame = frame.clone();
+//					StreamImageSingleton.getInstace().setFrame(prevFrame.clone());
 				}else{
 					prevFrame = frame.clone();
 				}
@@ -85,8 +87,8 @@ public class Recorder implements Runnable{
 		writer.release();
 	}
 
-	private boolean checkPath(){
-		File theDir = new File(utils.getPath());
+	private boolean checkPath(String folder){
+		File theDir = new File(utils.getPath() + folder);
 		if (!theDir.exists()) {
 			createLog(LogError.PATH_CREATE);
 			try{

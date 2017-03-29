@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.terreni.cctv.model.Log;
 import com.terreni.cctv.model.RecorderModel;
+import com.terreni.cctv.model.RecorderUtils;
 import com.terreni.cctv.model.User;
 
 
@@ -22,5 +23,8 @@ public final class ModelFactory {
 	
 	public static RecorderModel recorderModel(){
 		return new RecorderModel(UUID.randomUUID().toString());
+	}
+	public static RecorderUtils recorderUtils(){
+		return new RecorderUtils(UUID.randomUUID().toString());
 	}
 }

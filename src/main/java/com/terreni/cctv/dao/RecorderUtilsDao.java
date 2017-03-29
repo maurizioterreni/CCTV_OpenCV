@@ -34,4 +34,11 @@ public class RecorderUtilsDao {
 		entityManager.remove(recorderUtils);
 		entityManager.flush();
 	}
+	
+	public RecorderUtils getSetting(){
+		return entityManager
+				.createQuery("from RecorderUtils r ", RecorderUtils.class)
+				.setMaxResults(1)
+				.getSingleResult();
+	}
 }

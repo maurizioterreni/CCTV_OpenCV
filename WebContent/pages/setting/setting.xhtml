@@ -11,13 +11,52 @@
 
 		<div class="container">
 
-			
-			
-			
-			
+			<form class="form-signin" action="#{recorderUtilsBean.saveSetting()}"
+				method="post" style="max-width: 330px; margin: 0 auto;">
+				<h2 class="form-signin-heading">Impostazioni:</h2>
+
+				<hr />
+				<h:outputLabel value="Path" />
+				<input type="text" id="inputPath" style="margin-top: 10px;"
+					class="form-control"
+					value="#{recorderUtilsBean.recorderUtils.path}" />
+				<hr />
+				<h:outputLabel value="Formato" />
+				<h:selectOneMenu
+					style=" width: 100%; height: 38px;  margin-top: 10px;"
+					value="#{recorderUtilsBean.recorderUtils.format}">
+					<f:selectItem itemValue="mp4" itemLabel="mp4" />
+					<f:selectItem itemValue="avi" itemLabel="avi" />
+
+				</h:selectOneMenu>
+				<hr />
+				<h:outputLabel value="Frame" />
+				<h:selectOneMenu
+					style=" width: 100%; height: 38px;  margin-top: 10px;"
+					value="#{recorderUtilsBean.recorderUtils.fps}">
+					<f:selectItem itemValue="2" itemLabel="2 fps" />
+					<f:selectItem itemValue="3" itemLabel="3 fps" />
+					<f:selectItem itemValue="5" itemLabel="5 fps" />
+					<f:selectItem itemValue="10" itemLabel="10 fps" />
+					<f:selectItem itemValue="15" itemLabel="15 fps" />
+					<f:selectItem itemValue="20" itemLabel="20 fps" />
+					<f:selectItem itemValue="25" itemLabel="25 fps" />
+					<f:selectItem itemValue="30" itemLabel="30 fps" />
+				</h:selectOneMenu>
+
+
+
+				<hr />
+
+
+				<button class="btn btn-lg btn-primary btn-block"
+					style="margin-top: 10px;" type="submit">Sign in</button>
+			</form>
+
+
 		</div>
-		
+
 	</ui:define>
-	
+
 </ui:composition>
 </html>

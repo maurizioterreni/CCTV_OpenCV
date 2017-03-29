@@ -24,6 +24,8 @@
 	<session-config>
 		<session-timeout>120</session-timeout>
 	</session-config>
+	
+
 
 	<listener>
 		<display-name>SIMPLE Startup Listener</display-name>
