@@ -44,6 +44,12 @@ public class MotionDetection{
 					new Scalar(0, 255, 0), 1);
 			
 		}
+		
+		grayImage1.release();
+		grayImage2.release();
+		thresholdImage.release();
+		differenceImage.release();
+		
 
 		return detectionImage;
 
@@ -84,11 +90,12 @@ public class MotionDetection{
 						maxY = r.y + r.height;
 					}
 				}
-
+				contour.release();
 			}
 			v.release();
 			return new Rect(minX, minY, Math.abs(maxX - minX),Math.abs( maxY - minY ));
 		}
+		vv.release();
 		v.release();
 		return null;
 
